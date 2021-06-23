@@ -4,8 +4,6 @@ const connectDatabase = require("../config/database");
 
 const products = require("../data/products");
 
-const { connect } = require("mongoose");
-
 //Setting dotenv file
 dotenv.config({
   path: "backend/config/config.env",
