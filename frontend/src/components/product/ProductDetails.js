@@ -1,14 +1,17 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Carousel} from 'react-bootstrap'
 
 import Loader from '../layout/Loader'
 import MetaData from '../layout/MetaData'
+
 import { useDispatch, useSelector } from 'react-redux'
 import { getProductDetails, clearErrors } from '../../actions/productActions'
-
+import { addItemToCart } from '../../actions/cartActions'
 import {useAlert} from 'react-alert'
 
 const ProductDetails = ({match}) => {
+
+    const [quantity, setQuantity] = useState(1)
 
     const dispatch = useDispatch();
 
@@ -28,6 +31,20 @@ const ProductDetails = ({match}) => {
         
     },[dispatch,alert,error,match.params.id])
 
+    const DecreaseQty = () => {
+        if (quantity <= 1) return;
+        setQuantity(quantity - 1)
+    }
+
+    const IncreaseQty = () => {
+        if (quantity >= product.stock) return;
+        setQuantity(quantity + 1)
+    }
+
+    const addToCart = () => {
+        dispatch(addItemToCart(match.params.id, quantity))
+        alert.success('Item Added To Cart')
+    }    
     return (
         <>
             <MetaData title={product.name}/>
@@ -61,13 +78,13 @@ const ProductDetails = ({match}) => {
 
                             <p id="product_price">${product.price}</p>
                             <div className="stockCounter d-inline">
-                                <span className="btn btn-danger minus">-</span>
+                                <span className="btn btn-danger minus" onClick={DecreaseQty}>-</span>
 
-                                <input type="number" className="form-control count d-inline" value="1" readOnly />
+                                <input type="number" className="form-control count d-inline" value={quantity} readOnly />
 
-                                <span className="btn btn-primary plus">+</span>
+                                <span className="btn btn-primary plus" onClick={IncreaseQty}>+</span>
                             </div>
-                            <button type="button" id="cart_btn" className="btn btn-primary d-inline ml-4">Add to Cart</button>
+                            <button type="button" id="cart_btn" className="btn btn-primary d-inline ml-4" disabled={product.stock === 0} onClick={addToCart}>Add to Cart</button>
 
                             <hr/>
 
