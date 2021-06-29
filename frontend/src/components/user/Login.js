@@ -1,6 +1,6 @@
 import React, {useState, useEffect, Fragment} from 'react'
 import {Link} from 'react-router-dom'
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
@@ -14,15 +14,18 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     let history = useHistory();
+    let location = useLocation()
 
     const alert = useAlert();
     const dispatch = useDispatch();
 
     const {isAuthenticated, error, loading} = useSelector(state => state.auth);
 
+    const redirect = location.search ? location.search.split('=')[1] : '/'
+
     useEffect(()=> {
         if (isAuthenticated){
-            history.push("/")
+            history.push(redirect)
         }
 
         if (error) {

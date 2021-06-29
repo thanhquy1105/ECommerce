@@ -1,5 +1,6 @@
 import React, {Fragment} from 'react'
 import {Link} from "react-router-dom"
+import { useHistory } from "react-router-dom";
 
 import MetaData from "../layout/MetaData"
 
@@ -8,7 +9,7 @@ import { addItemToCart, removeItemFromCart } from '../../actions/cartActions'
 
 const Cart = () => {
     
-    
+    let history = useHistory();
     const dispatch = useDispatch();
 
     const {cartItems} = useSelector(state => state.cart)
@@ -27,6 +28,9 @@ const Cart = () => {
         dispatch(addItemToCart(id,quantity + 1))
     }
 
+    const checkoutHandler = () => {
+        history.push('/login?redirect=shipping')
+    }
     return (
         <>
             <MetaData title={'Your Cart'} />
@@ -86,7 +90,7 @@ const Cart = () => {
                                 <p>Est. total: <span className="order-summary-values">${cartItems.reduce((acc,item) => (acc + item.quantity * item.price),0 ).toFixed(2)}</span></p>
                 
                                 <hr />
-                                <button id="checkout_btn" className="btn btn-primary btn-block">Check out</button>
+                                <button id="checkout_btn" className="btn btn-primary btn-block" onClick={checkoutHandler}>Check out</button>
                             </div>
                         </div>
                     </div>
