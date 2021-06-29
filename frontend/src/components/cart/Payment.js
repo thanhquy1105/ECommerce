@@ -131,7 +131,7 @@ const Payment = () => {
                     <form className="shadow-lg" onSubmit={submitHandler}>
                         <h1 className="mb-4">Card Info</h1>
                         <div className="form-group">
-                        <label htmlFor="card_num_field">Card Number</label>
+                        <label htmlFor="card_num_field">Card Number (placeholder: 4000002760003184)</label>
                         <CardNumberElement
                             type="text"
                             id="card_num_field"

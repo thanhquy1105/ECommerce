@@ -1,15 +1,15 @@
 import axios from 'axios'
 
 import {
-   CREAT_ORDER_REQUEST,
-    CREAT_ORDER_SUCCESS,
-    CREAT_ORDER_FAIL,
+    CREATE_ORDER_REQUEST,
+    CREATE_ORDER_SUCCESS,
+    CREATE_ORDER_FAIL,
     CLEAR_ERRORS
 } from '../constants/orderConstants'
 
 export const createOrder = (order) => async (dispatch, getState) => {
     try {
-        dispatch({type: CREAT_ORDER_REQUEST})
+        dispatch({type: CREATE_ORDER_REQUEST})
 
         const config = {
             headers: {
@@ -20,13 +20,13 @@ export const createOrder = (order) => async (dispatch, getState) => {
         const { data } = await axios.post('/api/v1/order/new', order, config)
 
         dispatch({
-            type: CREAT_ORDER_SUCCESS,
+            type: CREATE_ORDER_SUCCESS,
             payload: data
         })
 
     } catch (error) {
         dispatch({
-            type: CREAT_ORDER_FAIL,
+            type: CREATE_ORDER_FAIL,
             payload: error.response.data.message
         })
     }
