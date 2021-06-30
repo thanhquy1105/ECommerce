@@ -7,6 +7,7 @@ import CheckoutSteps from './CheckoutSteps';
 
 import {useDispatch, useSelector} from 'react-redux'
 import { createOrder, clearErrors } from '../../actions/orderActions'
+import { removeItemFromCart } from '../../actions/cartActions'
 
 import {useStripe, useElements, CardNumberElement, CardExpiryElement, CardCvcElement} from '@stripe/react-stripe-js'
 
@@ -106,8 +107,8 @@ const Payment = () => {
                         status: result.paymentIntent.status
                     }
 
-                    dispatch(createOrder(order))
-
+                    dispatch(createOrder(order));
+                    cartItems.forEach((item) => {dispatch(removeItemFromCart(item.product))})
                     history.push('/success')
                 } else {
                     alert.error('There is some issue while payment processing')
@@ -166,7 +167,7 @@ const Payment = () => {
                         type="submit"
                         className="btn btn-block py-3"
                         >
-                        Pay {` - ${orderInfo && orderInfo.totalPrice}`}
+                        Pay {` - $${orderInfo && orderInfo.totalPrice}`}
                         </button>
             
                     </form>

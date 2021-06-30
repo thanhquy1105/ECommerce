@@ -65,8 +65,8 @@ const ListOrders = () => {
                 numOfItems: order.orderItems.length,
                 amount: `$${order.totalPrice}`,
                 status: order.orderStatus && String(order.orderStatus).includes('Delivered') ? 
-                    <p stype={{color: 'green'}}>{order.orderStatus}</p>
-                    : <p stype={{color: 'red'}}>{order.orderStatus}</p>,
+                    <p style={{color: 'green'}}>{order.orderStatus}</p>
+                    : <p style={{color: 'red'}}>{order.orderStatus}</p>,
                 actions: 
                     <Link to={`/order/${order._id}`} className="btn btn-primary">
                         <i className="fa fa-eye"></i>

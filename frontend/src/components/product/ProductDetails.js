@@ -24,7 +24,6 @@ const ProductDetails = ({match}) => {
     const {user} =useSelector(state => state.auth)
     const { error: reviewError, success} = useSelector(state => state.newReview)
 
-    console.log(success)
     useEffect(() => {
         
         dispatch(getProductDetails(match.params.id))
