@@ -187,7 +187,7 @@ const NewProduct = () => {
                                                 onChange={onChange}
                                                 multiple
                                             />
-                                            <label className='custom-file-label' for='customFile'>
+                                            <label className='custom-file-label' htmlFor='customFile'>
                                                 Choose Images
                                             </label>
                                         </div>
@@ -201,7 +201,7 @@ const NewProduct = () => {
                                 <button
                                 id="login_button"
                                 type="submit"
-                                class="btn btn-block py-3"
+                                className="btn btn-block py-3"
                                 disabled= {loading ? true: false}
                                 >
                                 CREATE
