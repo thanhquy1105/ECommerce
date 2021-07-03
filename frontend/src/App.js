@@ -20,9 +20,9 @@ import ListOrders from "./components/order/ListOrders";
 import OrderDetails from "./components/order/OrderDetails";
 
 // Auth or User Imports
-import Login from "./components/user/Login"
+import Login from "./components/user/Login";
 import Register from "./components/user/Register";
-import Profile from "./components/user/Profile"
+import Profile from "./components/user/Profile";
 import UpdateProfile from "./components/user/UpdateProfile";
 import UpdatePassword from "./components/user/UpdatePassword";
 import ForgotPassword from "./components/user/ForgotPassword";
@@ -32,33 +32,32 @@ import NewPassword from "./components/user/NewPassword";
 import Dashboard from "./components/admin/Dashboard";
 import ProductsList from "./components/admin/ProductsList";
 import NewProduct from "./components/admin/NewProduct";
+import UpdateProduct from "./components/admin/UpdateProduct";
 
 import ProtectedRoute from "./components/route/ProtectedRoute";
-import {loadUser} from './actions/userActions'
+import { loadUser } from "./actions/userActions";
 import { useSelector } from "react-redux";
-import store from './store'
+import store from "./store";
 import axios from "axios";
 
 //Payment
-import {Elements} from "@stripe/react-stripe-js"
-import {loadStripe} from "@stripe/stripe-js"
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 
 function App() {
-
-  const [stripeApiKey, setStripeApiKey] = useState('');
-  useEffect(()=> {
+  const [stripeApiKey, setStripeApiKey] = useState("");
+  useEffect(() => {
     store.dispatch(loadUser());
 
     async function getStripeApiKey() {
-      const {data} = await axios.get('/api/v1/stripeapi');
-      setStripeApiKey(data.stripeApiKey)
+      const { data } = await axios.get("/api/v1/stripeapi");
+      setStripeApiKey(data.stripeApiKey);
     }
 
     getStripeApiKey();
+  }, []);
 
-  },[])
-
-  const {user, loading} = useSelector(state => state.auth)
+  const { user, loading } = useSelector((state) => state.auth);
 
   return (
     <Router>
@@ -67,17 +66,17 @@ function App() {
         <div className="container container-fluid">
           <Route path="/" component={Home} exact />
           <Route path="/search/:keyword" component={Home} />
-          <Route path="/product/:id" component={ProductDetails} exact/>
+          <Route path="/product/:id" component={ProductDetails} exact />
 
-          <Route path="/cart" component={Cart} exact/>
-          <ProtectedRoute path="/shipping" component={Shipping}/>
-          <ProtectedRoute path="/confirm" component={ConfirmOrder} exact/>
-          <ProtectedRoute path="/success" component={OrderSuccess}/>
-          {stripeApiKey && 
-            <Elements stripe = {loadStripe(stripeApiKey)}>
-              <ProtectedRoute path="/payment" component={Payment}/>
+          <Route path="/cart" component={Cart} exact />
+          <ProtectedRoute path="/shipping" component={Shipping} />
+          <ProtectedRoute path="/confirm" component={ConfirmOrder} exact />
+          <ProtectedRoute path="/success" component={OrderSuccess} />
+          {stripeApiKey && (
+            <Elements stripe={loadStripe(stripeApiKey)}>
+              <ProtectedRoute path="/payment" component={Payment} />
             </Elements>
-          }
+          )}
 
           <Route path="/login" component={Login} exact />
           <Route path="/register" component={Register} exact />
@@ -85,22 +84,44 @@ function App() {
           <Route path="/password/reset/:token" component={NewPassword} exact />
           <ProtectedRoute path="/me" component={Profile} exact />
           <ProtectedRoute path="/me/update" component={UpdateProfile} exact />
-          <ProtectedRoute path="/password/update" component={UpdatePassword} exact />
+          <ProtectedRoute
+            path="/password/update"
+            component={UpdatePassword}
+            exact
+          />
 
           <ProtectedRoute path="/orders/me" component={ListOrders} exact />
           <ProtectedRoute path="/order/:id" component={OrderDetails} exact />
         </div>
 
-          <ProtectedRoute path="/dashboard" isAdmin={true} component={Dashboard} exact />
-          <ProtectedRoute path="/admin/products" isAdmin={true} component={ProductsList} exact />
-          <ProtectedRoute path="/admin/product" isAdmin={true} component={NewProduct} exact />
-        {!loading && user.role !== 'admin' &&(
-          <Footer />
-        )}
+        <ProtectedRoute
+          path="/dashboard"
+          isAdmin={true}
+          component={Dashboard}
+          exact
+        />
+        <ProtectedRoute
+          path="/admin/products"
+          isAdmin={true}
+          component={ProductsList}
+          exact
+        />
+        <ProtectedRoute
+          path="/admin/product"
+          isAdmin={true}
+          component={NewProduct}
+          exact
+        />
+        <ProtectedRoute
+          path="/admin/product/:id"
+          isAdmin={true}
+          component={UpdateProduct}
+          exact
+        />
+        {!loading && user.role !== "admin" && <Footer />}
       </div>
     </Router>
   );
 }
 
 export default App;
-
