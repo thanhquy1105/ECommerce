@@ -40,7 +40,7 @@ import UpdateUser from "./components/admin/UpdateUser";
 import ProductReviews from "./components/admin/ProductReviews";
 
 import ProtectedRoute from "./components/route/ProtectedRoute";
-import { loadUser } from "./actions/userActions";
+import { loadUser, clearErrors } from "./actions/userActions";
 import { useSelector } from "react-redux";
 import store from "./store";
 import axios from "axios";
@@ -51,6 +51,8 @@ import { loadStripe } from "@stripe/stripe-js";
 
 function App() {
   const [stripeApiKey, setStripeApiKey] = useState("");
+  const { user, isAuthenticated, loading } = useSelector((state) => state.auth);
+
   useEffect(() => {
     store.dispatch(loadUser());
 
@@ -60,9 +62,8 @@ function App() {
     }
 
     getStripeApiKey();
+    clearErrors();
   }, []);
-
-  const { user, isAuthenticated, loading } = useSelector((state) => state.auth);
 
   return (
     <Router>
