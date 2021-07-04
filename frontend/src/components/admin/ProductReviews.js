@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom";
 import { MDBDataTable } from "mdbreact";
 
 import MetaData from "../layout/MetaData";
-import Loader from "../layout/Loader";
 import SideBar from "./Sidebar";
 
 import { useAlert } from "react-alert";
