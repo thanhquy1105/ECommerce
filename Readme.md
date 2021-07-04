@@ -1,4 +1,7 @@
 Product was built at link: https://itshopecommerce.herokuapp.com/
+Admin Account:
+thanhquy11@gmail.com
+123456
 
 # ShopIT E-commerce Project
 
