@@ -1,3 +1,5 @@
+Product was built at link: https://itshopecommerce.herokuapp.com/
+
 # ShopIT E-commerce Project
 
 > Complete E-commerce site built with Node.js, React, Redux, Express, MongoDB
