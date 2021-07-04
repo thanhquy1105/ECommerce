@@ -7,19 +7,18 @@ const sendEmail = require("../utils/sendEmail");
 
 const crypto = require("crypto");
 
-const cloudinary = require('cloudinary')
+const cloudinary = require("cloudinary");
 
 //Register a user => /api/v1/register
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
-  
   const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
-    folder: 'avatars',
+    folder: "avatars",
     width: 150,
-    crop: "scale"
-  })
+    crop: "scale",
+  });
 
   const { name, email, password } = req.body;
-  
+
   const user = await User.create({
     name,
     email,
@@ -169,22 +168,22 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
   };
 
   // Update avatar
-  if (req.body.avatar !== '') {
-    const user = await User.findById(req.user.id)
+  if (req.body.avatar !== "") {
+    const user = await User.findById(req.user.id);
 
     const image_id = user.avatar.public_id;
-    const res = await cloudinary.v2.uploader.destroy(image_id)
+    const res = await cloudinary.v2.uploader.destroy(image_id);
 
     const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
-    folder: 'avatars',
-    width: 150,
-    crop: "scale"
-    })
+      folder: "avatars",
+      width: 150,
+      crop: "scale",
+    });
 
     newUserData.avatar = {
       public_id: result.public_id,
-      url: result.secure_url
-    }
+      url: result.secure_url,
+    };
   }
 
   const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
@@ -268,7 +267,9 @@ exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
     );
   }
 
-  // Remove avatar from cloudinary - TODO
+  // Remove avatar from cloudinary
+  const image_id = user.avatar.public_id;
+  await cloudinary.v2.uploader.destroy(image_id);
 
   await user.remove();
 
