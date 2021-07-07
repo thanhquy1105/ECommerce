@@ -1,14 +1,12 @@
-Product was built at link: https://itshopecommerce.herokuapp.com/
-
-Admin Account:
-
-thanhquy11@gmail.com
-
-123456
-
 # ShopIT E-commerce Project
 
 > Complete E-commerce site built with Node.js, React, Redux, Express, MongoDB
+
+Product was built at link: https://itshopecommerce.herokuapp.com/
+
+Admin Account:
+thanhquy11@gmail.com
+123456
 
 ### Env Variables
 
